@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="el"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Treasure Hunt</title>
+<style>body { font-family: system-ui, Arial, sans-serif; margin: 0; background: #0f1115; color: #e8e8e8; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 28px 16px; }
+.card { background: #171a21; border: 1px solid #2a2f3a; border-radius: 14px; padding: 18px; }
+h1 { font-size: 22px; margin: 0 0 10px; }
+p { line-height: 1.6; margin: 10px 0; white-space: pre-wrap; }
+input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2a2f3a; background: #0f1115; color: #e8e8e8; }
+button { margin-top: 10px; width: 100%; padding: 12px; border-radius: 10px; border: 0; background: #3b82f6; color: white; font-weight: 700; }
+.small { opacity: .85; font-size: 13px; }
+#feedback { margin-top: 10px; font-weight: 700; }
+</style>
+</head><body>
+<div class="wrap">
+<div class="card">
+<h1>Treasure Hunt</h1>
+<p>Άνοιξε το riddle-1.html για να ξεκινήσεις (ή σκάναρε το QR 1).</p>
+<button id="resetBtn">Reset progress</button>
+<p class="small">Το reset είναι για δοκιμές.</p>
+</div></div>
+<script>
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  localStorage.setItem("progress","0");
+  alert("Έγινε reset.");
+});
+</script>
+</body></html>
