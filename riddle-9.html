@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="el"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Γρίφος 9</title>
+<style>body { font-family: system-ui, Arial, sans-serif; margin: 0; background: #0f1115; color: #e8e8e8; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 28px 16px; }
+.card { background: #171a21; border: 1px solid #2a2f3a; border-radius: 14px; padding: 18px; }
+h1 { font-size: 22px; margin: 0 0 10px; }
+p { line-height: 1.6; margin: 10px 0; white-space: pre-wrap; }
+input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2a2f3a; background: #0f1115; color: #e8e8e8; text-transform: uppercase; }
+button { margin-top: 10px; width: 100%; padding: 12px; border-radius: 10px; border: 0; background: #3b82f6; color: white; font-weight: 700; }
+.small { opacity: .85; font-size: 13px; }
+#feedback { margin-top: 10px; font-weight: 700; }
+</style>
+</head><body>
+<div class="wrap">
+<div id="locked" class="card" style="display:none">
+<h1>Κλειδωμένο</h1><p id="lockedText"></p></div>
+<div id="content" class="card" style="display:none">
+<h1>Γρίφος 9</h1>
+<p>Στις μεγάλες τις γιορτές στέκονται όλοι προσοχή!
+Από κάτω σε κοιτούν και κοντά σου τραγουδούν…</p>
+<form id="answerForm">
+<input id="answerInput" autocomplete="off" placeholder="ΓΡΑΨΕ ΤΗΝ ΑΠΑΝΤΗΣΗ...">
+<button type="submit">ΥΠΟΒΟΛΗ</button>
+</form>
+<div id="feedback"></div>
+</div></div>
+<script>function normalizeGreek(s) {
+  if (!s) return "";
+  return s.toString().trim()
+    .toUpperCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ");
+}
+function getProgress(){return parseInt(localStorage.getItem("progress")||"0",10);}
+function setProgress(v){localStorage.setItem("progress",String(v));}
+function enforceOrder(n,msg){
+  const p=getProgress();
+  if(p<n-1){
+    document.getElementById("locked").style.display="block";
+    document.getElementById("lockedText").textContent=msg;
+    document.getElementById("content").style.display="none";
+    return;
+  }
+  document.getElementById("content").style.display="block";
+}
+function setupAnswerCheck(n,answers,success){
+  const f=document.getElementById("answerForm");
+  const i=document.getElementById("answerInput");
+  const fb=document.getElementById("feedback");
+  const acc=answers.map(a=>normalizeGreek(a));
+  f.addEventListener("submit",e=>{
+    e.preventDefault();
+    const u=normalizeGreek(i.value);
+    if(!u){fb.textContent="ΓΡΑΨΕ ΜΙΑ ΑΠΑΝΤΗΣΗ.";return;}
+    if(!acc.includes(u)){fb.textContent="❌ ΛΑΘΟΣ ΑΠΑΝΤΗΣΗ.";return;}
+    if(getProgress()<n) setProgress(n);
+    fb.textContent=success;
+    i.value="";
+  });
+}
+</script>
+<script>
+enforceOrder(9,"❌ ΔΕΝ ΕΧΕΙΣ ΛΥΣΕΙ ΤΟΝ ΠΡΟΗΓΟΥΜΕΝΟ ΓΡΙΦΟ.");
+setupAnswerCheck(9,["ΗΡΩΩΝ"],"🏁 ΣΥΓΧΑΡΗΤΗΡΙΑ! ΟΛΟΚΛΗΡΩΣΕΣ ΤΟ ΠΑΙΧΝΙΔΙ.");
+</script>
+</body></html>
